@@ -32,6 +32,7 @@
             background-color: var(--light);
             color: var(--dark);
             line-height: 1.6;
+            overflow-x: hidden;
         }
         
         .container {
@@ -109,12 +110,18 @@
         
         /* Header & Navigation */
         header {
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
+            transition: background 0.3s;
+        }
+        
+        header.scrolled {
+            background-color: rgba(255, 255, 255, 0.98);
         }
         
         .navbar {
@@ -163,15 +170,21 @@
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            background: linear-gradient(rgba(37, 99, 235, 0.85), rgba(124, 58, 237, 0.85)), 
+                        url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: white;
-            padding: 150px 0 100px;
+            padding: 180px 0 120px;
             text-align: center;
+            position: relative;
         }
         
         .hero h1 {
             font-size: 3.5rem;
             margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
         
         .hero p {
@@ -179,6 +192,7 @@
             max-width: 700px;
             margin: 0 auto 2rem;
             color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
         }
         
         .hero-btns {
@@ -203,6 +217,18 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
         }
         
         .service-card:hover {
@@ -223,7 +249,11 @@
         
         /* Why Choose Us Section */
         .why-us {
-            background-color: #f1f5f9;
+            background: linear-gradient(rgba(248, 250, 252, 0.9), rgba(248, 250, 252, 0.9)), 
+                        url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
         }
         
         .features {
@@ -236,6 +266,10 @@
             display: flex;
             align-items: flex-start;
             gap: 20px;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         }
         
         .feature-icon {
@@ -272,6 +306,10 @@
             display: flex;
             align-items: center;
             gap: 15px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         }
         
         .contact-icon {
@@ -284,6 +322,7 @@
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
+            flex-shrink: 0;
         }
         
         .contact-form {
@@ -320,6 +359,25 @@
         textarea.form-control {
             min-height: 150px;
             resize: vertical;
+        }
+        
+        .form-status {
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .form-status.success {
+            background: #d1fae5;
+            color: #065f46;
+            display: block;
+        }
+        
+        .form-status.error {
+            background: #fee2e2;
+            color: #991b1b;
+            display: block;
         }
         
         /* Footer */
@@ -427,6 +485,7 @@
                 justify-content: flex-start;
                 padding-top: 50px;
                 transition: left 0.3s ease;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             }
             
             .nav-links.active {
@@ -442,7 +501,8 @@
             }
             
             .hero {
-                padding: 120px 0 80px;
+                padding: 140px 0 80px;
+                background-attachment: scroll;
             }
             
             .hero h1 {
@@ -459,6 +519,10 @@
                 max-width: 300px;
                 text-align: center;
             }
+            
+            .why-us {
+                background-attachment: scroll;
+            }
         }
         
         /* Animations */
@@ -468,6 +532,7 @@
         }
         
         .fade-in {
+            opacity: 0;
             animation: fadeIn 0.8s ease forwards;
         }
         
@@ -656,33 +721,35 @@
                     </div>
                     <div class="contact-item fade-in delay-2">
                         <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
+                            <i class="fas fa-globe"></i>
                         </div>
                         <div>
-                            <h3>Visit Us</h3>
-                            <p>H.Hunter, Harare, Zimbabwe</p>
+                            <h3>Online Presence</h3>
+                            <p>Fully remote team serving clients worldwide</p>
+                            <p>Available for online consultations</p>
                         </div>
                     </div>
                 </div>
                 <div class="contact-form fade-in delay-3">
-                    <form id="contactForm">
+                    <form id="contactForm" action="https://formspree.io/f/xldpedry" method="POST">
                         <div class="form-group">
                             <label for="name">Your Name</label>
-                            <input type="text" id="name" class="form-control" required>
+                            <input type="text" id="name" name="name" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="email">Your Email</label>
-                            <input type="email" id="email" class="form-control" required>
+                            <input type="email" id="email" name="email" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="subject">Subject</label>
-                            <input type="text" id="subject" class="form-control" required>
+                            <input type="text" id="subject" name="subject" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="message">Your Message</label>
-                            <textarea id="message" class="form-control" required></textarea>
+                            <textarea id="message" name="message" class="form-control" required></textarea>
                         </div>
                         <button type="submit" class="btn">Send Message</button>
+                        <div class="form-status" id="formStatus"></div>
                     </form>
                 </div>
             </div>
@@ -717,7 +784,7 @@
                     <p><i class="fas fa-phone"></i> +263 78 320 4318</p>
                     <p><i class="fas fa-phone"></i> +263 71 413 4479</p>
                     <p><i class="fas fa-envelope"></i> info@index0tech.com</p>
-                    <p><i class="fas fa-map-marker-alt"></i> H.Hunter, Harare, Zimbabwe</p>
+                    <p><i class="fas fa-globe"></i> Remote team - Worldwide service</p>
                 </div>
             </div>
             <div class="copyright">
@@ -750,6 +817,16 @@
             });
         });
         
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -768,24 +845,49 @@
             });
         });
         
-        // Form submission
+        // Form submission with Formspree
         const contactForm = document.getElementById('contactForm');
+        const formStatus = document.getElementById('formStatus');
+        
         if(contactForm) {
-            contactForm.addEventListener('submit', function(e) {
+            contactForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
-                // Get form values
-                const name = document.getElementById('name').value;
-                const email = document.getElementById('email').value;
-                const subject = document.getElementById('subject').value;
-                const message = document.getElementById('message').value;
+                // Change button text to indicate loading
+                const submitBtn = contactForm.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Sending...';
+                submitBtn.disabled = true;
                 
-                // In a real application, you would send this data to a server
-                // For this example, we'll just show an alert
-                alert(`Thank you, ${name}! Your message has been sent. We'll get back to you soon at ${email}.`);
-                
-                // Reset the form
-                contactForm.reset();
+                try {
+                    const formData = new FormData(contactForm);
+                    const response = await fetch(contactForm.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        formStatus.textContent = 'Thank you! Your message has been sent successfully.';
+                        formStatus.className = 'form-status success';
+                        contactForm.reset();
+                    } else {
+                        throw new Error('Form submission failed');
+                    }
+                } catch (error) {
+                    formStatus.textContent = 'Oops! There was a problem sending your message. Please try again.';
+                    formStatus.className = 'form-status error';
+                } finally {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    
+                    // Hide status message after 5 seconds
+                    setTimeout(() => {
+                        formStatus.style.display = 'none';
+                    }, 5000);
+                }
             });
         }
         
